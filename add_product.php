@@ -16,26 +16,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = sanitize_input($_POST['title']);
     $description = sanitize_input($_POST['description']);
     $price = sanitize_input($_POST['price']);
-    $image_url = sanitize_input($_POST['image_url']); // Untuk demo, ini adalah URL gambar
 
     if (empty($title) || empty($price)) {
         set_message('error', 'Judul dan Harga harus diisi.');
         redirect('add_product.php');
     }
 
-    // Validasi harga harus angka
     if (!is_numeric($price) || $price < 0) {
         set_message('error', 'Harga harus berupa angka positif.');
         redirect('add_product.php');
     }
 
-    // Default image if empty
-    if (empty($image_url)) {
-        $image_url = "https://placehold.co/400x300/e0e0e0/555555?text=No+Image";
+    // Proses Upload Gambar
+    $image_path = null;
+
+    if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
+        $file_tmp = $_FILES['image_file']['tmp_name'];
+        $file_name = basename($_FILES['image_file']['name']);
+        $file_size = $_FILES['image_file']['size'];
+        $file_type = mime_content_type($file_tmp);
+
+        $allowed_types = ['image/jpeg', 'image/png', 'image/jpg'];
+        if (!in_array($file_type, $allowed_types)) {
+            set_message('error', 'Format gambar hanya boleh JPG, JPEG, atau PNG.');
+            redirect('add_product.php');
+        }
+
+        // Rename file agar unik
+        $new_name = uniqid('img_') . '.' . pathinfo($file_name, PATHINFO_EXTENSION);
+        $destination = 'uploads/' . $new_name;
+
+        if (!move_uploaded_file($file_tmp, $destination)) {
+            set_message('error', 'Gagal mengunggah gambar.');
+            redirect('add_product.php');
+        }
+
+        $image_path = $destination;
+    } else {
+        set_message('error', 'Gambar produk wajib diunggah.');
+        redirect('add_product.php');
     }
 
+    // Simpan ke database
     $stmt = $pdo->prepare("INSERT INTO products (user_id, title, description, price, image_url) VALUES (?, ?, ?, ?, ?)");
-    if ($stmt->execute([$user_id, $title, $description, $price, $image_url])) {
+    if ($stmt->execute([$user_id, $title, $description, $price, $image_path])) {
         set_message('success', 'Produk berhasil ditambahkan!');
         redirect('dashboard_seller.php');
     } else {
@@ -73,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl mx-auto">
             <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Tambah Produk Baru</h2>
             <?php echo $message; ?>
-            <form action="add_product.php" method="POST" class="space-y-4">
+            <form action="add_product.php" method="POST" enctype="multipart/form-data" class="space-y-4">
                 <div>
                     <label for="title" class="block text-gray-700 text-sm font-semibold mb-2">Judul Produk:</label>
                     <input type="text" id="title" name="title" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -87,9 +111,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="number" id="price" name="price" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div>
-                    <label for="image_url" class="block text-gray-700 text-sm font-semibold mb-2">URL Gambar Produk (Opsional):</label>
-                    <input type="file" id="file" name="file" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Contoh: https://example.com/gambar.jpg">
-                    <p class="text-sm text-gray-500 mt-1">Jika kosong, gambar placeholder akan digunakan.</p>
+                    <label for="image_file" class="block text-gray-700 text-sm font-semibold mb-2">Gambar Produk (JPG, JPEG, PNG):</label>
+                    <input type="file" id="image_file" name="image_file" accept=".jpg,.jpeg,.png" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <p class="text-sm text-gray-500 mt-1">Gambar wajib diunggah dan hanya mendukung JPG, JPEG, atau PNG.</p>
                 </div>
                 <div class="flex justify-between space-x-4">
                     <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-300">Tambah Produk</button>

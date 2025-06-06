@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost'; // Host database Anda
-$db = 'projek_web'; // Nama database yang sudah Anda buat
+$db = 'uap_pdt'; // Nama database yang sudah Anda buat
 $user = 'root'; // Username database Anda
 $pass = ''; // Password database Anda (kosong jika tidak ada)
 $charset = 'utf8mb4';

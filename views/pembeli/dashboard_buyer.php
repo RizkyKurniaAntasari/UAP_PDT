@@ -1,7 +1,7 @@
 <?php
 // dashboard_buyer.php
-require_once 'config.php';
-require_once 'functions.php';
+require_once __DIR__ . '/../../src/config.php';
+require_once __DIR__ . '/../../src/functions.php';
 
 check_auth();
 if (get_user_role() !== 'buyer') {

@@ -1,7 +1,7 @@
 <?php
 // add_product.php
-require_once 'config.php';
-require_once 'functions.php';
+require_once '../../config.php';
+require_once '../../functions.php';
 
 check_auth();
 if (get_user_role() !== 'seller') {

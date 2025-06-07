@@ -1,7 +1,7 @@
 <?php
 // register.php
-require_once 'config.php';
-require_once 'functions.php';
+require_once __DIR__ . '/../../src/config.php';
+require_once __DIR__ . '/../../src/functions.php';
 
 $message = get_message();
 

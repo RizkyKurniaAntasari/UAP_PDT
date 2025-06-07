@@ -1,7 +1,7 @@
 <?php
 // login.php
-require_once 'config.php';
-require_once 'functions.php';
+require_once __DIR__ . '/../../src/config.php';
+require_once __DIR__ . '/../../src/functions.php';
 
 $message = get_message();
 
@@ -24,9 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['role'] = $user['role'];
         set_message('success', 'Login berhasil! Selamat datang, ' . $user['username'] . '!');
         if ($user['role'] == 'seller') {
-            redirect('dashboard_seller.php');
+            redirect('/views/penjual/dashboard_seller.php');
         } else {
-            redirect('dashboard_buyer.php');
+            redirect('/views/pembeli/dashboard_buyer.php');
         }
     } else {
         set_message('error', 'Username atau password salah.');

@@ -1,3 +1,8 @@
+<?php
+    require_once __DIR__ . '/src/config.php';
+    require_once __DIR__ . '/src/functions.php';
+    require_once 'controllers/auth/register.php'
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -16,7 +21,7 @@
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Daftar Akun Baru</h2>
         <?php echo $message; ?>
-        <form action="register.php" method="POST" class="space-y-4">
+        <form action="controllers/auth/register.php" method="POST" class="space-y-4">
             <div>
                 <label for="username" class="block text-gray-700 text-sm font-semibold mb-2">Username:</label>
                 <input type="text" id="username" name="username" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>

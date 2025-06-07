@@ -1,8 +1,9 @@
 <?php
-$host = 'localhost'; // Host database Anda
-$db = 'uap_pdt'; // Nama database yang sudah Anda buat
-$user = 'root'; // Username database Anda
-$pass = ''; // Password database Anda (kosong jika tidak ada)
+$env = parse_ini_file('.env');
+$host = $env['DB_HOST']; // Host database Anda
+$db = $env['DB_NAME']; // Nama database yang sudah Anda buat
+$user = $env['DB_USER']; // Username database Anda
+$pass = $env['DB_PASS']; // Password database Anda (kosong jika tidak ada)
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

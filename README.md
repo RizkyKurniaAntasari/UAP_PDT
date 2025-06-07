@@ -1,2 +1,2 @@
 # UAP_PDT
-Program Transaksi ( Jual Beli Baran )
+Program Transaksi ( Toko Kelontong Madura )

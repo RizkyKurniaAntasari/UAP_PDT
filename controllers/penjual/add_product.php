@@ -44,14 +44,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Rename file agar unik
         $new_name = uniqid('img_') . '.' . pathinfo($file_name, PATHINFO_EXTENSION);
-        $destination = BASE_PATH . '/uploads/' . $new_name;
+        $destination_dir = BASE_PATH . '/uploads/';
+        $destination_path = $destination_dir . $new_name;
 
-        if (!move_uploaded_file($file_tmp, $destination)) {
+        // Pastikan folder tujuan ada
+        if (!is_dir($destination_dir)) {
+            mkdir($destination_dir, 0755, true);
+        }
+
+        // Pindahkan file
+        if (!move_uploaded_file($file_tmp, $destination_path)) {
             set_message('error', 'Gagal mengunggah gambar.');
             redirect_seller('add_product.php');
         }
 
-        $image_path = $destination;
+        // Simpan path relatif ke database
+        $image_path = '/PDT/uploads/' . $new_name; # sesuaikan dengan nama project masing2 (PDT)
     } else {
         set_message('error', 'Gambar produk wajib diunggah.');
         redirect_seller('add_product.php');
@@ -67,4 +75,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         redirect_seller('add_product.php');
     }
 }
-?>

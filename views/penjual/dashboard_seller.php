@@ -54,8 +54,8 @@
                             <?php foreach ($products as $product): ?>
                                 <tr class="border-b border-gray-200 hover:bg-gray-50">
                                     <td class="py-3 px-4">
-                                        <!-- <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['title']); ?>" class="w-16 h-16 object-cover rounded-md"> -->
-                                        <?php var_dump($product['image_url']); ?>
+                                        <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['title']); ?>" class="w-16 h-16 object-cover rounded-md">
+                                        <!-- <?php var_dump($product['image_url']); ?> -->
                                         <!-- <img src="/PDT/uploads/img_684481b49f62c.jpeg   " class="w-16 h-16 object-cover rounded-md"> -->
                                     </td>
                                     <td class="py-3 px-4 text-gray-800"><?php echo htmlspecialchars($product['title']); ?></td>

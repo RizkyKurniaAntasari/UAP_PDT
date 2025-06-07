@@ -1,3 +1,6 @@
+<?php
+    require_once '../../controllers/penjual/add_product.php'
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -27,7 +30,7 @@
         <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl mx-auto">
             <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Tambah Produk Baru</h2>
             <?php echo $message; ?>
-            <form action="controllers/add_product.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <form action="../../controllers/penjual/add_product.php" method="POST" enctype="multipart/form-data" class="space-y-4">
                 <div>
                     <label for="title" class="block text-gray-700 text-sm font-semibold mb-2">Judul Produk:</label>
                     <input type="text" id="title" name="title" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -47,7 +50,7 @@
                 </div>
                 <div class="flex justify-between space-x-4">
                     <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-300">Tambah Produk</button>
-                    <a href="dashboard_seller.php" class="w-full text-center bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300">Batal</a>
+                    <a href="../penjual/dashboard_seller.php" class="w-full text-center bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300">Batal</a>
                 </div>
             </form>
         </div>

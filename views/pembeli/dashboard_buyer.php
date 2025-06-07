@@ -1,7 +1,7 @@
 <?php
 // dashboard_buyer.php
 require_once __DIR__ . '/../../src/config.php';
-require_once __DIR__ . '/../../src/functions.php';
+require_once BASE_PATH . func;
 
 check_auth();
 if (get_user_role() !== 'buyer') {
@@ -92,7 +92,7 @@ foreach ($all_messages as $msg) {
                 <span class="text-white">Halo, <?php echo htmlspecialchars($username); ?> (Pembeli)</span>
                 <a href="edit_profile.php" class="text-white hover:text-blue-200">Edit Profil</a>
                 <a href="messages.php" class="text-white hover:text-blue-200">Pesan</a>
-                <a href="logout.php" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-300">Logout</a>
+                <a href="../../controllers/auth/logout.php" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-300">Logout</a>
             </div>
         </div>
     </nav>

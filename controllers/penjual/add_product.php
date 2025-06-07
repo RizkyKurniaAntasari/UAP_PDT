@@ -1,12 +1,12 @@
 <?php
 // add_product.php
-require_once '../../config.php';
-require_once '../../functions.php';
+require_once '../../src/config.php';
+require_once BASE_PATH . func;
 
 check_auth();
 if (get_user_role() !== 'seller') {
     set_message('error', 'Akses ditolak. Anda bukan penjual.');
-    redirect('dashboard_buyer.php');
+    redirect('/views/pembeli/dashboard_buyer.php');
 }
 
 $user_id = get_user_id();
@@ -19,12 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (empty($title) || empty($price)) {
         set_message('error', 'Judul dan Harga harus diisi.');
-        redirect('add_product.php');
+        redirect_seller('add_product.php');
     }
 
     if (!is_numeric($price) || $price < 0) {
         set_message('error', 'Harga harus berupa angka positif.');
-        redirect('add_product.php');
+        redirect_seller('add_product.php');
     }
 
     // Proses Upload Gambar
@@ -39,32 +39,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $allowed_types = ['image/jpeg', 'image/png', 'image/jpg'];
         if (!in_array($file_type, $allowed_types)) {
             set_message('error', 'Format gambar hanya boleh JPG, JPEG, atau PNG.');
-            redirect('add_product.php');
+            redirect_seller('add_product.php');
         }
 
         // Rename file agar unik
         $new_name = uniqid('img_') . '.' . pathinfo($file_name, PATHINFO_EXTENSION);
-        $destination = 'uploads/' . $new_name;
+        $destination = BASE_PATH . '/uploads/' . $new_name;
 
         if (!move_uploaded_file($file_tmp, $destination)) {
             set_message('error', 'Gagal mengunggah gambar.');
-            redirect('add_product.php');
+            redirect_seller('add_product.php');
         }
 
         $image_path = $destination;
     } else {
         set_message('error', 'Gambar produk wajib diunggah.');
-        redirect('add_product.php');
+        redirect_seller('add_product.php');
     }
 
     // Simpan ke database
     $stmt = $pdo->prepare("INSERT INTO products (user_id, title, description, price, image_url) VALUES (?, ?, ?, ?, ?)");
     if ($stmt->execute([$user_id, $title, $description, $price, $image_path])) {
         set_message('success', 'Produk berhasil ditambahkan!');
-        redirect('dashboard_seller.php');
+        redirect('/views/penjual/dashboard_seller.php');
     } else {
         set_message('error', 'Terjadi kesalahan saat menambahkan produk.');
-        redirect('add_product.php');
+        redirect_seller('add_product.php');
     }
 }
 ?>

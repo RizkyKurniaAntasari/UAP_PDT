@@ -1,7 +1,7 @@
 <?php
 // index.php
 require_once __DIR__ . '/src/config.php';
-require_once __DIR__ . '/src/functions.php';
+require_once BASE_PATH . func;
 
 if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
     if ($_SESSION['role'] == 'seller') {

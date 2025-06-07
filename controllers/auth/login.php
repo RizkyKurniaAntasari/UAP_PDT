@@ -1,7 +1,7 @@
 <?php
 // login.php
 require_once __DIR__ . '/../../src/config.php';
-require_once __DIR__ . '/../../src/functions.php';
+require_once BASE_PATH . func;
 
 $message = get_message();
 
@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (empty($username) || empty($password)) {
         set_message('error', 'Username dan password harus diisi.');
-        redirect('login.php');
+        redirect('/login.php');
     }
 
     $stmt = $pdo->prepare("SELECT id, username, password, role FROM users WHERE username = ? OR email = ?");
@@ -30,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     } else {
         set_message('error', 'Username atau password salah.');
-        redirect('login.php');
+        redirect('/login.php');
     }
 }
-?>

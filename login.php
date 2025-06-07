@@ -1,6 +1,6 @@
 <?php
-    require_once __DIR__ . '/src/config.php';
-    require_once __DIR__ . '/src/functions.php';
+    // require_once __DIR__ . '/src/config.php';
+    // require_once __DIR__ . '/src/functions.php';
     require_once __DIR__ . '/controllers/auth/login.php'
 ?>
 <!DOCTYPE html>

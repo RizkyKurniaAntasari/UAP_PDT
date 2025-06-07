@@ -1,7 +1,7 @@
 <?php
 // register.php
 require_once __DIR__ . '/../../src/config.php';
-require_once __DIR__ . '/../../src/functions.php';
+require_once BASE_PATH . func;
 
 $message = get_message();
 
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
     if ($stmt->execute([$username, $email, $hashed_password, $role])) {
         set_message('success', 'Registrasi berhasil! Silakan login.');
-        redirect('login.php');
+        redirect('/login.php');
     } else {
         set_message('error', 'Terjadi kesalahan saat registrasi.');
         redirect('register.php');

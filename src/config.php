@@ -18,7 +18,9 @@ try {
 } catch (\PDOException $e) {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
-
+define('BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/PDT'); // PDT sebagai nama projek
+define('config', '/src/config.php');
+define('func', '/src/functions.php');
 // Mulai session
 session_start();
 ?>

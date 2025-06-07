@@ -16,10 +16,17 @@ function redirect($url) {
     exit();
 }
 
+// ============= [ seller ]
+function redirect_seller($url) {
+    header("Location: " . $url);
+    exit();
+}
+
+
 // Fungsi untuk mengecek apakah user sudah login
 function check_auth() {
     if (!isset($_SESSION['user_id'])) {
-        redirect('login.php');
+        redirect('/login.php');
     }
 }
 

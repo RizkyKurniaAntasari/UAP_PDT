@@ -105,7 +105,7 @@ include_once '../components/navbar.php';
                                 <?php foreach ($conversation['messages'] as $msg): ?>
                                     <p class="text-sm <?php echo ($msg['sender_id'] == $user_id ? 'text-right text-gray-700' : 'text-left text-gray-800 font-medium'); ?>">
                                         <span class="<?php echo ($msg['sender_id'] == $user_id ? 'bg-blue-100' : 'bg-gray-200'); ?> px-3 py-1 rounded-lg inline-block">
-                                            <?php echo ($msg['sender_id'] == $user_id ? 'Anda' : htmlspecialchars($msg['sender_username'])) . ': ' . nl2br(htmlspecialchars($msg['message_text'])); ?>
+                                            <?php echo ($msg['sender_id'] == $user_id ? 'Anda' : htmlspecialchars($msg['partner_username'])) . ': ' . nl2br(htmlspecialchars($msg['message_text'])); ?>
                                         </span>
                                         <span class="block text-xs text-gray-500 mt-1"><?php echo date('d M Y H:i', strtotime($msg['created_at'])); ?></span>
                                     </p>

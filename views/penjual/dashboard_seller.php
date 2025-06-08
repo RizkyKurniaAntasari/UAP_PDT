@@ -1,10 +1,11 @@
 <?php
-    require_once __DIR__ . '/../../src/config.php';
-    require_once BASE_PATH . func;
-    require_once '../../controllers/penjual/dashboard_seller.php';
+require_once __DIR__ . '/../../src/config.php';
+require_once BASE_PATH . func;
+require_once '../../controllers/penjual/dashboard_seller.php';
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,13 +18,14 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
-    <?php include_once '../components/navbar.php';?>
-<?php
-// var_dump($_SESSION['role']); // cek isi role
-// var_dump($_SESSION['user_id']); // cek user id yang login
-// var_dump($product['user_id']); // cek user id pemilik produk
-?>
+    <?php include_once '../components/navbar.php'; ?>
+    <?php
+    // var_dump($_SESSION['role']); // cek isi role
+    // var_dump($_SESSION['user_id']); // cek user id yang login
+    // var_dump($product['user_id']); // cek user id pemilik produk
+    ?>
     <div class="container mx-auto p-6">
         <?php echo $message; ?>
 
@@ -93,5 +95,7 @@
             <?php endif; ?>
         </div>
     </div>
+    <?php include_once '../components/footer.php'; ?>
 </body>
+
 </html>

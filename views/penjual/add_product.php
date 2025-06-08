@@ -1,8 +1,9 @@
 <?php
-    require_once '../../controllers/penjual/add_product.php'
+require_once '../../controllers/penjual/add_product.php'
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,16 +16,9 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
-    <nav class="bg-blue-600 p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="dashboard_seller.php" class="text-white text-2xl font-bold">Dashboard Penjual</a>
-            <div class="flex items-center space-x-4">
-                <span class="text-white">Halo, <?php echo htmlspecialchars(get_username()); ?></span>
-                <a href="logout.php" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-300">Logout</a>
-            </div>
-        </div>
-    </nav>
+    <?php include_once '../components/navbar.php'; ?>
 
     <div class="container mx-auto p-6">
         <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl mx-auto">
@@ -55,5 +49,7 @@
             </form>
         </div>
     </div>
+    <?php include_once '../components/footer.php'; ?>
 </body>
+
 </html>

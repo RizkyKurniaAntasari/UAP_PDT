@@ -23,8 +23,7 @@ $role = $_SESSION['role'] ?? null;
         }
     </style>
 </head>
-<div class="container mx-auto p-6">
-
+<body class="bg-gray-100">
     <div class="container mx-auto p-6">
         <div class="bg-white p-8 rounded-lg shadow-md flex flex-col md:flex-row gap-8">
             <!-- Kolom Gambar -->
@@ -99,6 +98,7 @@ $role = $_SESSION['role'] ?? null;
         </div>
     </div>
 </div>
+<?php include_once 'components/footer.php'; ?>
 </body>
 
 </html>

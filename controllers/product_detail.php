@@ -9,6 +9,7 @@ $user_id = get_user_id();
 $username = get_username();
 $role = get_user_role();
 $message = get_message();
+$peran = $role == 'buyer' ? 'pembeli' : 'penjual';
 
 $product = null;
 $seller_info = null;
@@ -22,7 +23,7 @@ if (isset($_GET['id'])) {
 
     if (!$product) {
         set_message('error', 'Produk tidak ditemukan atau tidak tersedia.');
-        redirect('dashboard_buyer.php');
+        redirect_views('/' . $peran . '/dashboard_buyer.php');
     }
 
     // Get seller's ID for messaging

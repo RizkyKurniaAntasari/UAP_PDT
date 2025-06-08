@@ -18,18 +18,24 @@ $dashboard_url = $dashboard_routes[$role] ?? '/'; // fallback ke home jika role 
 ?>
 <nav class="bg-blue-600 p-4 shadow-md">
     <div class="container mx-auto flex justify-between items-center">
-        <a href="<?php echo $dashboard_url; ?>" class="text-white text-2xl font-bold">
-            Dashboard <?php echo ucfirst($role); ?>
+        <a href="<?= $dashboard_url; ?>" class="text-white text-2xl font-bold whitespace-nowrap">
+            Dashboard <?= ucfirst($role); ?>
         </a>
         <div class="flex items-center space-x-4">
-            <span class="text-white">
-                Halo, <?php echo htmlspecialchars($username); ?> (<?php echo ucfirst($role); ?>)
+            <span class="text-white whitespace-nowrap">
+                Halo, <?= htmlspecialchars($username); ?> (<?= ucfirst($role); ?>)
             </span>
-            <a href="<?=$edit;?>" class="text-white hover:text-blue-200">Edit Profil</a>
+            <a href="<?= $edit; ?>" class="text-white hover:text-blue-200 whitespace-nowrap">Edit Profil</a>
             <?php if ($role === 'pembeli' || $role === 'penjual'): ?>
-                <a href="<?= $pesan_routes;?>" class="text-white hover:text-blue-200">Pesan</a>
+                <a href="<?= $pesan_routes; ?>" class="text-white hover:text-blue-200 whitespace-nowrap">Pesan</a>
             <?php endif; ?>
-            <a href="<?= $logout;?>" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-300">Logout</a>
+            <form action="<?= $logout; ?>" class="flex items-center">
+                <button type="submit"
+                    class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-300 whitespace-nowrap"
+                    onclick="return confirm('Yakin ingin keluar ?');">
+                    Keluar
+                </button>
+            </form>
         </div>
     </div>
 </nav>

@@ -1,4 +1,4 @@
-    -- Nama Database: projek_web
+    -- Nama Database: uas_pdt_db
 
     -- Tabel users
     CREATE TABLE users (

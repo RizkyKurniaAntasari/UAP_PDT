@@ -37,5 +37,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     set_message('error', 'Metode request tidak valid.');
 }
 
-redirect('dashboard_buyer.php');
+redirect('/views/pembeli/dashboard_buyer.php');
 ?>

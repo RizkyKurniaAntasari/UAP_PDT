@@ -1,7 +1,7 @@
 <?php
 // product_detail.php
-require_once '../src/config.php';
-require_once '../src/functions.php';
+require_once __DIR__ . '/../src/config.php';
+require_once BASE_PATH . func;
 
 check_auth();
 

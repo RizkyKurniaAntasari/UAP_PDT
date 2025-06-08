@@ -48,7 +48,7 @@ include_once __DIR__ .'/../views/components/navbar.php';
 
                         <div class="mt-8 bg-gray-50 p-6 rounded-lg border border-gray-200">
                             <h3 class="text-xl font-bold text-gray-800 mb-4">Kirim Pesan ke Penjual</h3>
-                            <form action="send_message.php" method="POST" class="space-y-4">
+                            <form action="../controllers/send_message.php" method="POST" class="space-y-4">
                                 <input type="hidden" name="receiver_id" value="<?php echo htmlspecialchars($seller_info['id']); ?>">
                                 <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
                                 <div>
@@ -61,8 +61,8 @@ include_once __DIR__ .'/../views/components/navbar.php';
                     <?php elseif ($user_id == $product['user_id']): ?>
                         <p class="text-gray-600 italic">Ini adalah produk Anda.</p>
                         <div class="mt-4 flex space-x-2">
-                            <a href="edit_product.php?id=<?php echo $product['id']; ?>" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">Edit Produk</a>
-                            <a href="delete_product.php?id=<?php echo $product['id']; ?>" class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus Produk</a>
+                            <a href="../views/penjual/edit_product.php?id=<?php echo $product['id']; ?>" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">Edit Produk</a>
+                            <a href="../views/penjual/delete_product.php?id=<?php echo $product['id']; ?>" class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus Produk</a>
                         </div>
                     <?php endif; ?>
                 </div>

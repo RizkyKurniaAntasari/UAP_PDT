@@ -92,7 +92,7 @@ foreach ($all_messages as $msg) {
                             <h3 class="text-lg font-semibold text-gray-800 mb-2">
                                 Percakapan dengan: <span class="text-blue-600"><?php echo htmlspecialchars($conversation['partner_username']); ?></span>
                                 <?php if ($conversation['product_title']): ?>
-                                    <span class="text-sm text-gray-600 ml-2">(Tentang: <a href="product_detail.php?id=<?php echo $conversation['product_id']; ?>" class="text-blue-500 hover:underline"><?php echo htmlspecialchars($conversation['product_title']); ?></a>)</span>
+                                    <span class="text-sm text-gray-600 ml-2">(Tentang: <a href="../views/product_detail.php?id=<?php echo $conversation['product_id']; ?>" class="text-blue-500 hover:underline"><?php echo htmlspecialchars($conversation['product_title']); ?></a>)</span>
                                 <?php endif; ?>
                             </h3>
                             <div class="mt-2 space-y-2 max-h-64 overflow-y-auto border-t border-gray-200 pt-2 pr-2">

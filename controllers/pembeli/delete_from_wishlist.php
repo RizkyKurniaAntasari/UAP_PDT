@@ -6,7 +6,7 @@ require_once BASE_PATH . func;
 check_auth();
 if (get_user_role() !== 'buyer') {
     set_message('error', 'Akses ditolak. Anda bukan pembeli.');
-    redirect('dashboard_seller.php');
+    redirect('/views/pembeli/dashboard_buyer.php');
 }
 
 $user_id = get_user_id();
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (empty($wishlist_id)) {
         set_message('error', 'ID Wishlist tidak diberikan.');
-        redirect('dashboard_buyer.php');
+        redirect('/views/pembeli/dashboard_buyer.php');
     }
 
     // Pastikan item wishlist yang dihapus adalah milik user yang sedang login
@@ -34,5 +34,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     set_message('error', 'Metode request tidak valid.');
 }
 
-redirect('dashboard_buyer.php');
+redirect('/views/pembeli/dashboard_buyer.php');
 ?>

@@ -6,7 +6,7 @@
 check_auth();
 if (get_user_role() !== 'seller') {
     set_message('error', 'Akses ditolak. Anda bukan penjual.');
-    redirect('dashboard_buyer.php');
+    redirect('/views/pembeli/dashboard_buyer.php');
 }
 
 $user_id = get_user_id();
@@ -29,5 +29,5 @@ if (isset($_GET['id'])) {
     set_message('error', 'ID Produk tidak diberikan.');
 }
 
-redirect('dashboard_seller.php');
+redirect('/views/penjual/dashboard_seller.php');
 ?>

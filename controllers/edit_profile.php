@@ -1,7 +1,7 @@
 <?php
 // edit_profile.php
-require_once 'config.php';
-require_once 'functions.php';
+require_once __DIR__ . '/../src/config.php';
+require_once BASE_PATH . func;
 
 check_auth();
 
@@ -17,7 +17,7 @@ $user_data = $stmt->fetch();
 
 if (!$user_data) {
     set_message('error', 'Data pengguna tidak ditemukan.');
-    redirect('logout.php'); // Redirect ke logout jika data tidak ditemukan (misal: user dihapus)
+    redirect_controllers('/auth/logout.php');
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt_email_check->execute([$new_email, $user_id]);
     if ($stmt_email_check->fetchColumn() > 0) {
         set_message('error', 'Email sudah digunakan oleh akun lain.');
-        redirect('edit_profile.php');
+        redirect_views('/edit_profile.php');
     }
 
     // Update email
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($new_password)) {
         if ($new_password !== $confirm_new_password) {
             set_message('error', 'Konfirmasi password baru tidak cocok.');
-            redirect('edit_profile.php');
+            redirect_views('/edit_profile.php');
         }
 
         // Verifikasi password lama
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (!password_verify($current_password, $stored_password_hash)) {
             set_message('error', 'Password lama salah.');
-            redirect('edit_profile.php');
+            redirect_views('/edit_profile.php');
         }
 
         $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
@@ -62,6 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         set_message('success', 'Profil Anda berhasil diperbarui!');
     }
-    redirect('edit_profile.php');
+    redirect_views('/edit_profile.php');
 }
 ?>

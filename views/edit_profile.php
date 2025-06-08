@@ -1,3 +1,6 @@
+<?php
+    require_once __DIR__ . '/../controllers/edit_profile.php';
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -12,17 +15,11 @@
         }
     </style>
 </head>
-<body class="bg-gray-100">
-    <nav class="bg-blue-600 p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="<?php echo ($role == 'seller' ? 'dashboard_seller.php' : 'dashboard_buyer.php'); ?>" class="text-white text-2xl font-bold">Kembali ke Dashboard</a>
-            <div class="flex items-center space-x-4">
-                <span class="text-white">Halo, <?php echo htmlspecialchars($username); ?> (<?php echo htmlspecialchars(ucfirst($role)); ?>)</span>
-                <a href="logout.php" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-300">Logout</a>
-            </div>
-        </div>
-    </nav>
+<body class="bg-gray-100">  
 
+<?php include_once '../views/components/navbar.php';
+// var_dump($role);
+?>
     <div class="container mx-auto p-6">
         <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl mx-auto">
             <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Edit Profil Anda</h2>
@@ -54,7 +51,7 @@
                 </div>
                 <div class="flex justify-between space-x-4">
                     <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">Perbarui Profil</button>
-                    <a href="<?php echo ($role == 'seller' ? 'dashboard_seller.php' : 'dashboard_buyer.php'); ?>" class="w-full text-center bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300">Batal</a>
+                    <a href="<?php echo ($role == 'pembeli' ? $dashboard_routes['pembeli'] : $dashboard_routes['penjual']); ?>" class="w-full text-center bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300">Batal</a>
                 </div>
             </form>
         </div>

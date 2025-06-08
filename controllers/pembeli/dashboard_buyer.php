@@ -1,9 +1,10 @@
 <?php
-
+require_once __DIR__ . '/../../src/config.php';
+require_once BASE_PATH . func;
 check_auth();
 if (get_user_role() !== 'buyer') {
     set_message('error', 'Akses ditolak. Anda bukan pembeli.');
-    redirect('dashboard_seller.php'); // Arahkan ke dashboard penjual jika bukan buyer
+    redirect('/views/penjual/dashboard_seller.php'); // Arahkan ke dashboard penjual jika bukan buyer
 }
 
 $user_id = get_user_id();

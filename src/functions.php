@@ -10,7 +10,14 @@ function sanitize_input($data) {
 }
 
 // Fungsi untuk redirect
+define('BASE_URL', '/PDT'); // Base URL
 function redirect($url) {
+    header("Location: " . BASE_URL . $url);
+    exit();
+}
+
+// ============= [ seller ]
+function redirect_seller($url) {
     header("Location: " . $url);
     exit();
 }
@@ -18,7 +25,7 @@ function redirect($url) {
 // Fungsi untuk mengecek apakah user sudah login
 function check_auth() {
     if (!isset($_SESSION['user_id'])) {
-        redirect('login.php');
+        redirect('/login.php');
     }
 }
 

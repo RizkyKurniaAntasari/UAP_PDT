@@ -1,46 +1,7 @@
 <?php
-// register.php
-require_once 'config.php';
-require_once 'functions.php';
-
-$message = get_message();
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = sanitize_input($_POST['username']);
-    $email = sanitize_input($_POST['email']);
-    $password = sanitize_input($_POST['password']);
-    $confirm_password = sanitize_input($_POST['confirm_password']);
-    $role = sanitize_input($_POST['role']);
-
-    if (empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($role)) {
-        set_message('error', 'Semua kolom harus diisi.');
-        redirect('register.php');
-    }
-
-    if ($password !== $confirm_password) {
-        set_message('error', 'Konfirmasi password tidak cocok.');
-        redirect('register.php');
-    }
-
-    // Cek apakah username atau email sudah terdaftar
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ? OR email = ?");
-    $stmt->execute([$username, $email]);
-    if ($stmt->fetchColumn() > 0) {
-        set_message('error', 'Username atau Email sudah terdaftar.');
-        redirect('register.php');
-    }
-
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
-    if ($stmt->execute([$username, $email, $hashed_password, $role])) {
-        set_message('success', 'Registrasi berhasil! Silakan login.');
-        redirect('login.php');
-    } else {
-        set_message('error', 'Terjadi kesalahan saat registrasi.');
-        redirect('register.php');
-    }
-}
+    require_once __DIR__ . '/src/config.php';
+    require_once BASE_PATH . func;
+    require_once 'controllers/auth/register.php'
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -60,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Daftar Akun Baru</h2>
         <?php echo $message; ?>
-        <form action="register.php" method="POST" class="space-y-4">
+        <form action="controllers/auth/register.php" method="POST" class="space-y-4">
             <div>
                 <label for="username" class="block text-gray-700 text-sm font-semibold mb-2">Username:</label>
                 <input type="text" id="username" name="username" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>

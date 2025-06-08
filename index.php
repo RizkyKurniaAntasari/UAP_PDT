@@ -1,18 +1,20 @@
 <?php
 // index.php
-require_once 'config.php';
-require_once 'functions.php';
+require_once __DIR__ . '/src/config.php';
+require_once BASE_PATH . func;
 
-if (isset($_SESSION['user_id'])) {
+if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
     if ($_SESSION['role'] == 'seller') {
         redirect('dashboard_seller.php');
     } elseif ($_SESSION['role'] == 'buyer') {
         redirect('dashboard_buyer.php');
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +27,7 @@ if (isset($_SESSION['user_id'])) {
         }
     </style>
 </head>
+
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md text-center">
         <h1 class="text-3xl font-bold text-gray-800 mb-6">Selamat Datang!</h1>
@@ -35,4 +38,5 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </div>
 </body>
+
 </html>

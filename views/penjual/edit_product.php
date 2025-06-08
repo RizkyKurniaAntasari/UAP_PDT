@@ -1,65 +1,7 @@
 <?php
 // edit_product.php
-require_once 'config.php';
-require_once 'functions.php';
+require_once __DIR__ . '/../../controllers/penjual/edit_product.php';
 
-check_auth();
-if (get_user_role() !== 'seller') {
-    set_message('error', 'Akses ditolak. Anda bukan penjual.');
-    redirect('dashboard_buyer.php');
-}
-
-$user_id = get_user_id();
-$message = get_message();
-$product = null;
-
-if (isset($_GET['id'])) {
-    $product_id = sanitize_input($_GET['id']);
-    $stmt = $pdo->prepare("SELECT * FROM products WHERE id = ? AND user_id = ?");
-    $stmt->execute([$product_id, $user_id]);
-    $product = $stmt->fetch();
-
-    if (!$product) {
-        set_message('error', 'Produk tidak ditemukan atau Anda tidak memiliki izin untuk mengeditnya.');
-        redirect('dashboard_seller.php');
-    }
-} else {
-    set_message('error', 'ID Produk tidak diberikan.');
-    redirect('dashboard_seller.php');
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $product_id = sanitize_input($_POST['product_id']);
-    $title = sanitize_input($_POST['title']);
-    $description = sanitize_input($_POST['description']);
-    $price = sanitize_input($_POST['price']);
-    $image_url = sanitize_input($_POST['image_url']);
-    $status = sanitize_input($_POST['status']);
-
-    if (empty($title) || empty($price) || empty($status)) {
-        set_message('error', 'Judul, Harga, dan Status harus diisi.');
-        redirect('edit_product.php?id=' . $product_id);
-    }
-
-    if (!is_numeric($price) || $price < 0) {
-        set_message('error', 'Harga harus berupa angka positif.');
-        redirect('edit_product.php?id=' . $product_id);
-    }
-
-    // Default image if empty
-    if (empty($image_url)) {
-        $image_url = "https://placehold.co/400x300/e0e0e0/555555?text=No+Image";
-    }
-
-    $stmt = $pdo->prepare("UPDATE products SET title = ?, description = ?, price = ?, image_url = ?, status = ? WHERE id = ? AND user_id = ?");
-    if ($stmt->execute([$title, $description, $price, $image_url, $status, $product_id, $user_id])) {
-        set_message('success', 'Produk berhasil diperbarui!');
-        redirect('dashboard_seller.php');
-    } else {
-        set_message('error', 'Terjadi kesalahan saat memperbarui produk.');
-        redirect('edit_product.php?id=' . $product_id);
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -91,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Edit Produk</h2>
             <?php echo $message; ?>
             <?php if ($product): ?>
-                <form action="edit_product.php" method="POST" class="space-y-4">
+                <form action="../../controllers/penjual/edit_product.php" method="POST" class="space-y-4">
                     <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
                     <div>
                         <label for="title" class="block text-gray-700 text-sm font-semibold mb-2">Judul Produk:</label>
@@ -107,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <div>
                         <label for="image_url" class="block text-gray-700 text-sm font-semibold mb-2">URL Gambar Produk:</label>
-                        <input type="url" id="image_url" name="image_url" value="<?php echo htmlspecialchars($product['image_url']); ?>" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="file" id="image_url" name="image_url" value="<?php echo htmlspecialchars($product['image_url']); ?>" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
                     <div>
                         <label for="status" class="block text-gray-700 text-sm font-semibold mb-2">Status:</label>
@@ -118,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <div class="flex justify-between space-x-4">
                         <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">Perbarui Produk</button>
-                        <a href="dashboard_seller.php" class="w-full text-center bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300">Batal</a>
+                        <a href="../../views/penjual/dashboard_seller.php" class="w-full text-center bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300">Batal</a>
                     </div>
                 </form>
             <?php else: ?>

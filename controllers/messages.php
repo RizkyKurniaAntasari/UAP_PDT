@@ -1,7 +1,7 @@
 <?php
 // messages.php
-require_once 'config.php';
-require_once 'functions.php';
+require_once __DIR__ . '/../src/config.php';
+require_once __DIR__ . '/../src/functions.php';
 
 check_auth();
 
@@ -67,16 +67,8 @@ foreach ($all_messages as $msg) {
     </style>
 </head>
 <body class="bg-gray-100">
-    <nav class="bg-blue-600 p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="<?php echo ($role == 'seller' ? 'dashboard_seller.php' : 'dashboard_buyer.php'); ?>" class="text-white text-2xl font-bold">Kembali ke Dashboard</a>
-            <div class="flex items-center space-x-4">
-                <span class="text-white">Halo, <?php echo htmlspecialchars($username); ?> (<?php echo htmlspecialchars(ucfirst($role)); ?>)</span>
-                <a href="edit_profile.php" class="text-white hover:text-blue-200">Edit Profil</a>
-                <a href="logout.php" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-300">Logout</a>
-            </div>
-        </div>
-    </nav>
+    
+    <?php include_once '../views/components/navbar.php';?>
 
     <div class="container mx-auto p-6">
         <?php echo $message; ?>
@@ -92,7 +84,7 @@ foreach ($all_messages as $msg) {
                             <h3 class="text-lg font-semibold text-gray-800 mb-2">
                                 Percakapan dengan: <span class="text-blue-600"><?php echo htmlspecialchars($conversation['partner_username']); ?></span>
                                 <?php if ($conversation['product_title']): ?>
-                                    <span class="text-sm text-gray-600 ml-2">(Tentang: <a href="product_detail.php?id=<?php echo $conversation['product_id']; ?>" class="text-blue-500 hover:underline"><?php echo htmlspecialchars($conversation['product_title']); ?></a>)</span>
+                                    <span class="text-sm text-gray-600 ml-2">(Tentang: <a href="../views/product_detail.php?id=<?php echo $conversation['product_id']; ?>" class="text-blue-500 hover:underline"><?php echo htmlspecialchars($conversation['product_title']); ?></a>)</span>
                                 <?php endif; ?>
                             </h3>
                             <div class="mt-2 space-y-2 max-h-64 overflow-y-auto border-t border-gray-200 pt-2 pr-2">

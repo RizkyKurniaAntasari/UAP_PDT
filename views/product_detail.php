@@ -1,38 +1,7 @@
-<?php
-// product_detail.php
-require_once 'config.php';
-require_once 'functions.php';
-
-check_auth();
-
-$user_id = get_user_id();
-$username = get_username();
-$role = get_user_role();
-$message = get_message();
-
-$product = null;
-$seller_info = null;
-
-if (isset($_GET['id'])) {
-    $product_id = sanitize_input($_GET['id']);
-
-    $stmt = $pdo->prepare("SELECT p.*, u.username AS seller_username, u.email AS seller_email FROM products p JOIN users u ON p.user_id = u.id WHERE p.id = ? AND p.status = 'available'");
-    $stmt->execute([$product_id]);
-    $product = $stmt->fetch();
-
-    if (!$product) {
-        set_message('error', 'Produk tidak ditemukan atau tidak tersedia.');
-        redirect('dashboard_buyer.php');
-    }
-
-    // Get seller's ID for messaging
-    $seller_info = ['id' => $product['user_id'], 'username' => $product['seller_username']];
-
-} else {
-    set_message('error', 'ID Produk tidak diberikan.');
-    redirect('dashboard_buyer.php');
-}
-?>
+<?php 
+require_once __DIR__ . '/../controllers/product_detail.php'; 
+include_once __DIR__ .'/../views/components/navbar.php';
+?> 
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -48,17 +17,6 @@ if (isset($_GET['id'])) {
     </style>
 </head>
 <body class="bg-gray-100">
-    <nav class="bg-blue-600 p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="<?php echo ($role == 'seller' ? 'dashboard_seller.php' : 'dashboard_buyer.php'); ?>" class="text-white text-2xl font-bold">Kembali ke Dashboard</a>
-            <div class="flex items-center space-x-4">
-                <span class="text-white">Halo, <?php echo htmlspecialchars($username); ?> (<?php echo htmlspecialchars(ucfirst($role)); ?>)</span>
-                <a href="edit_profile.php" class="text-white hover:text-blue-200">Edit Profil</a>
-                <a href="messages.php" class="text-white hover:text-blue-200">Pesan</a>
-                <a href="logout.php" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-300">Logout</a>
-            </div>
-        </div>
-    </nav>
 
     <div class="container mx-auto p-6">
         <?php echo $message; ?>
@@ -77,7 +35,7 @@ if (isset($_GET['id'])) {
 
                     <?php if ($role == 'buyer' && $user_id != $product['user_id']): // Hanya pembeli yang bisa menambahkan ke wishlist dan mengirim pesan ke penjual lain ?>
                         <div class="flex space-x-4 mb-6">
-                            <form action="add_to_wishlist.php" method="POST" class="inline-block">
+                            <form action="../controllers/pembeli/add_to_wishlist.php" method="POST" class="inline-block">
                                 <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                                 <button type="submit" class="bg-yellow-500 text-white py-3 px-6 rounded-md hover:bg-yellow-600 transition duration-300 text-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -90,7 +48,7 @@ if (isset($_GET['id'])) {
 
                         <div class="mt-8 bg-gray-50 p-6 rounded-lg border border-gray-200">
                             <h3 class="text-xl font-bold text-gray-800 mb-4">Kirim Pesan ke Penjual</h3>
-                            <form action="send_message.php" method="POST" class="space-y-4">
+                            <form action="../controllers/send_message.php" method="POST" class="space-y-4">
                                 <input type="hidden" name="receiver_id" value="<?php echo htmlspecialchars($seller_info['id']); ?>">
                                 <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
                                 <div>
@@ -103,8 +61,8 @@ if (isset($_GET['id'])) {
                     <?php elseif ($user_id == $product['user_id']): ?>
                         <p class="text-gray-600 italic">Ini adalah produk Anda.</p>
                         <div class="mt-4 flex space-x-2">
-                            <a href="edit_product.php?id=<?php echo $product['id']; ?>" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">Edit Produk</a>
-                            <a href="delete_product.php?id=<?php echo $product['id']; ?>" class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus Produk</a>
+                            <a href="../views/penjual/edit_product.php?id=<?php echo $product['id']; ?>" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">Edit Produk</a>
+                            <a href="../views/penjual/delete_product.php?id=<?php echo $product['id']; ?>" class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus Produk</a>
                         </div>
                     <?php endif; ?>
                 </div>

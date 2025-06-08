@@ -1,7 +1,7 @@
 <?php
 // logout.php
-require_once 'config.php';
-require_once 'functions.php';
+require_once __DIR__ . '/../../src/config.php';
+require_once BASE_PATH . func;
 
 // Hapus semua variabel session
 $_SESSION = array();
@@ -19,5 +19,5 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 set_message('success', 'Anda telah berhasil logout.');
-redirect('index.php');
+redirect('/index.php');
 ?>

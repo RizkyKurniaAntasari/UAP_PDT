@@ -2,7 +2,6 @@
 require_once __DIR__ . '/../controllers/product_detail.php';
 include_once __DIR__ . '/../views/components/navbar.php';
 
-// Pastikan variabel session tersedia
 $user_id = $_SESSION['user_id'] ?? null;
 $role = $_SESSION['role'] ?? null;
 
@@ -99,10 +98,7 @@ $role = $_SESSION['role'] ?? null;
             </div>
         </div>
     </div>
-
-
 </div>
-
 </body>
 
 </html>

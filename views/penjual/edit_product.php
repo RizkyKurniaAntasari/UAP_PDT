@@ -1,21 +1,7 @@
 <?php
 // views/penjual/edit_product.php
-
-// This file handles displaying the form.
-// The logic for fetching the product or processing form submission
-// should be handled by the controller that *includes* this view,
-// or that this view redirects to for processing.
-
-// For simplicity, we'll assume the controller (which processes the GET request for initial load)
-// has already set $product and $message, and then *includes* this file.
-// Or, if this file is accessed directly, it first includes the controller
-// that sets these variables.
-
-// For clarity, let's include the controller that populates $product and $message
-// for the initial GET request, but crucially, this file does NOT handle POST requests.
 require_once __DIR__ . '/../../src/config.php';
 require_once __DIR__ . '/../../src/functions.php';
-
 // IMPORTANT: This 'require' should be the controller that handles the GET request for displaying the form.
 // If your current setup is that the controller only handles POST and this view handles GET,
 // then the GET logic needs to be moved here or to a 'view_product_for_edit' controller.
@@ -55,7 +41,6 @@ if (!$product) {
     redirect('/views/penjual/dashboard_seller.php');
 }
 
-// Now $product is available for the HTML form
 ?>
 <!DOCTYPE html>
 <html lang="id">

@@ -20,7 +20,6 @@
 <?php include_once '../views/components/navbar.php';
 // var_dump($role);
 ?>
-
     <div class="container mx-auto p-6">
         <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl mx-auto">
             <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Edit Profil Anda</h2>

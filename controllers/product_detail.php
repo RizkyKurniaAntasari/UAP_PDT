@@ -1,7 +1,7 @@
 <?php
 // product_detail.php
-require_once 'config.php';
-require_once 'functions.php';
+require_once '../src/config.php';
+require_once '../src/functions.php';
 
 check_auth();
 
@@ -30,6 +30,6 @@ if (isset($_GET['id'])) {
 
 } else {
     set_message('error', 'ID Produk tidak diberikan.');
-    redirect('dashboard_buyer.php');
+    redirect('/views/pembeli/dashboard_buyer.php');
 }
 ?>

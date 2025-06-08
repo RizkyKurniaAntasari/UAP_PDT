@@ -2,73 +2,8 @@
 // dashboard_buyer.php
 require_once __DIR__ . '/../../src/config.php';
 require_once BASE_PATH . func;
-
-check_auth();
-if (get_user_role() !== 'buyer') {
-    set_message('error', 'Akses ditolak. Anda bukan pembeli.');
-    redirect('dashboard_seller.php'); // Arahkan ke dashboard penjual jika bukan buyer
-}
-
-$user_id = get_user_id();
-$username = get_username();
-$message = get_message();
-
-// Ambil semua produk yang tersedia (status 'available')
-$search_query = isset($_GET['search']) ? sanitize_input($_GET['search']) : '';
-$where_clause = '';
-$params = [];
-
-if (!empty($search_query)) {
-    $where_clause = " WHERE title LIKE ? OR description LIKE ?";
-    $params = ["%$search_query%", "%$search_query%"];
-}
-
-$stmt_products = $pdo->prepare("SELECT p.*, u.username AS seller_username FROM products p JOIN users u ON p.user_id = u.id" . $where_clause . " AND p.status = 'available' ORDER BY p.created_at DESC");
-$stmt_products->execute($params);
-$products = $stmt_products->fetchAll();
-
-// Ambil wishlist pembeli
-$stmt_wishlist = $pdo->prepare("SELECT w.id AS wishlist_id, p.* FROM wishlists w JOIN products p ON w.product_id = p.id WHERE w.user_id = ? ORDER BY w.created_at DESC");
-$stmt_wishlist->execute([$user_id]);
-$wishlist_items = $stmt_wishlist->fetchAll();
-
-// Ambil pesan yang dikirim dan diterima oleh pembeli ini
-$stmt_messages = $pdo->prepare("
-    SELECT m.*, 
-           CASE 
-               WHEN m.sender_id = ? THEN 'Anda' 
-               ELSE s.username 
-           END AS partner_username,
-           p.title AS product_title
-    FROM messages m
-    JOIN users s ON (m.sender_id = s.id AND m.sender_id != ?) OR (m.receiver_id = s.id AND m.receiver_id != ?)
-    LEFT JOIN products p ON m.product_id = p.id
-    WHERE m.sender_id = ? OR m.receiver_id = ?
-    ORDER BY m.created_at DESC
-");
-$stmt_messages->execute([$user_id, $user_id, $user_id, $user_id, $user_id]);
-$all_messages = $stmt_messages->fetchAll();
-
-// Group messages by conversation partner or product
-$conversations = [];
-foreach ($all_messages as $msg) {
-    $key = '';
-    if ($msg['product_id']) {
-        $key = 'product_' . $msg['product_id'] . '_' . $msg['partner_username'];
-    } else {
-        $key = 'user_' . $msg['partner_username'];
-    }
-    
-    if (!isset($conversations[$key])) {
-        $conversations[$key] = [
-            'product_title' => $msg['product_title'],
-            'partner_username' => $msg['partner_username'],
-            'messages' => []
-        ];
-    }
-    $conversations[$key]['messages'][] = $msg;
-}
-
+require_once BASE_PATH . '/controllers/pembeli/dashboard_buyer.php';
+include_once '../components/navbar.php';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -85,17 +20,6 @@ foreach ($all_messages as $msg) {
     </style>
 </head>
 <body class="bg-gray-100">
-    <nav class="bg-blue-600 p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="dashboard_buyer.php" class="text-white text-2xl font-bold">Dashboard Pembeli</a>
-            <div class="flex items-center space-x-4">
-                <span class="text-white">Halo, <?php echo htmlspecialchars($username); ?> (Pembeli)</span>
-                <a href="edit_profile.php" class="text-white hover:text-blue-200">Edit Profil</a>
-                <a href="messages.php" class="text-white hover:text-blue-200">Pesan</a>
-                <a href="../../controllers/auth/logout.php" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-300">Logout</a>
-            </div>
-        </div>
-    </nav>
 
     <div class="container mx-auto p-6">
         <?php echo $message; ?>
@@ -124,8 +48,8 @@ foreach ($all_messages as $msg) {
                                 <p class="text-xl font-bold text-blue-600 mb-2">Rp <?php echo number_format($product['price'], 0, ',', '.'); ?></p>
                                 <p class="text-gray-500 text-xs mb-4">Penjual: <?php echo htmlspecialchars($product['seller_username']); ?></p>
                                 <div class="mt-auto flex space-x-2">
-                                    <a href="product_detail.php?id=<?php echo $product['id']; ?>" class="flex-grow text-center bg-blue-600 text-white py-2 px-3 rounded-md hover:bg-blue-700 transition duration-300 text-sm">Lihat Detail</a>
-                                    <form action="add_to_wishlist.php" method="POST" class="inline-block">
+                                    <a href="../product_detail.php?id=<?php echo $product['id']; ?>" class="flex-grow text-center bg-blue-600 text-white py-2 px-3 rounded-md hover:bg-blue-700 transition duration-300 text-sm">Lihat Detail</a>
+                                    <form action="../../controllers/pembeli/add_to_wishlist.php" method="POST" class="inline-block">
                                         <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                                         <button type="submit" class="bg-yellow-500 text-white py-2 px-3 rounded-md hover:bg-yellow-600 transition duration-300 text-sm">Wishlist</button>
                                     </form>
@@ -150,8 +74,8 @@ foreach ($all_messages as $msg) {
                                 <h3 class="text-lg font-semibold text-gray-800 mb-2"><?php echo htmlspecialchars($item['title']); ?></h3>
                                 <p class="text-xl font-bold text-blue-600 mb-2">Rp <?php echo number_format($item['price'], 0, ',', '.'); ?></p>
                                 <div class="mt-auto flex space-x-2">
-                                    <a href="product_detail.php?id=<?php echo $item['id']; ?>" class="flex-grow text-center bg-blue-600 text-white py-2 px-3 rounded-md hover:bg-blue-700 transition duration-300 text-sm">Lihat Detail</a>
-                                    <form action="delete_from_wishlist.php" method="POST" class="inline-block">
+                                    <a href="../product_detail.php?id=<?php echo $item['id']; ?>" class="flex-grow text-center bg-blue-600 text-white py-2 px-3 rounded-md hover:bg-blue-700 transition duration-300 text-sm">Lihat Detail</a>
+                                    <form action="../../controllers/pembeli/delete_from_wishlist.php" method="POST" class="inline-block">
                                         <input type="hidden" name="wishlist_id" value="<?php echo $item['wishlist_id']; ?>">
                                         <button type="submit" class="bg-red-500 text-white py-2 px-3 rounded-md hover:bg-red-600 transition duration-300 text-sm" onclick="return confirm('Hapus dari wishlist?');">Hapus</button>
                                     </form>

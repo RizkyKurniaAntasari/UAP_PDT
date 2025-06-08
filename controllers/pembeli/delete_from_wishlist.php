@@ -1,7 +1,7 @@
 <?php
 // delete_from_wishlist.php
-require_once 'config.php';
-require_once 'functions.php';
+require_once __DIR__ . '/../../src/config.php';
+require_once BASE_PATH . func;
 
 check_auth();
 if (get_user_role() !== 'buyer') {

@@ -1,12 +1,12 @@
 <?php
 // add_to_wishlist.php
-require_once '../config.php';
-require_once '../functions.php';
+require_once __DIR__ . '/../../src/config.php';
+require_once BASE_PATH . func;
 
 check_auth();
 if (get_user_role() !== 'buyer') {
     set_message('error', 'Akses ditolak. Anda bukan pembeli.');
-    redirect('dashboard_seller.php');
+    redirect('/views/penjual/dashboard_seller.php');
 }
 
 $user_id = get_user_id();
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (empty($product_id)) {
         set_message('error', 'ID Produk tidak diberikan.');
-        redirect('dashboard_buyer.php');
+        redirect('/views/pembeli/dashboard_buyer.php');
     }
 
     // Cek apakah produk sudah ada di wishlist
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt_check->execute([$user_id, $product_id]);
     if ($stmt_check->fetchColumn() > 0) {
         set_message('error', 'Produk ini sudah ada di wishlist Anda.');
-        redirect('dashboard_buyer.php');
+        redirect('/views/pembeli/dashboard_buyer.php');
     }
 
     $stmt = $pdo->prepare("INSERT INTO wishlists (user_id, product_id) VALUES (?, ?)");

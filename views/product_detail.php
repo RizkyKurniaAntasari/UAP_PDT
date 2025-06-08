@@ -1,3 +1,7 @@
+<?php 
+require_once __DIR__ . '/../controllers/product_detail.php'; 
+include_once __DIR__ .'/../views/components/navbar.php';
+?> 
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -13,17 +17,6 @@
     </style>
 </head>
 <body class="bg-gray-100">
-    <nav class="bg-blue-600 p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="<?php echo ($role == 'seller' ? 'dashboard_seller.php' : 'dashboard_buyer.php'); ?>" class="text-white text-2xl font-bold">Kembali ke Dashboard</a>
-            <div class="flex items-center space-x-4">
-                <span class="text-white">Halo, <?php echo htmlspecialchars($username); ?> (<?php echo htmlspecialchars(ucfirst($role)); ?>)</span>
-                <a href="edit_profile.php" class="text-white hover:text-blue-200">Edit Profil</a>
-                <a href="messages.php" class="text-white hover:text-blue-200">Pesan</a>
-                <a href="logout.php" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-300">Logout</a>
-            </div>
-        </div>
-    </nav>
 
     <div class="container mx-auto p-6">
         <?php echo $message; ?>
@@ -42,7 +35,7 @@
 
                     <?php if ($role == 'buyer' && $user_id != $product['user_id']): // Hanya pembeli yang bisa menambahkan ke wishlist dan mengirim pesan ke penjual lain ?>
                         <div class="flex space-x-4 mb-6">
-                            <form action="add_to_wishlist.php" method="POST" class="inline-block">
+                            <form action="../controllers/pembeli/add_to_wishlist.php" method="POST" class="inline-block">
                                 <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                                 <button type="submit" class="bg-yellow-500 text-white py-3 px-6 rounded-md hover:bg-yellow-600 transition duration-300 text-lg">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

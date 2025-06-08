@@ -22,7 +22,6 @@ function redirect_seller($url) {
     exit();
 }
 
-
 // Fungsi untuk mengecek apakah user sudah login
 function check_auth() {
     if (!isset($_SESSION['user_id'])) {

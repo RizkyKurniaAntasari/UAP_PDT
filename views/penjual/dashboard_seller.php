@@ -63,7 +63,7 @@
                                     <td class="py-3 px-4 text-gray-600 text-sm"><?php echo date('d M Y H:i', strtotime($product['created_at'])); ?></td>
                                     <td class="py-3 px-4 space-x-2">
                                         <a href="../../views/penjual/edit_product.php?id=<?php echo $product['id']; ?>" class="text-blue-600 hover:underline text-sm">Edit</a>
-                                        <a href="../../views/penjual/delete_product.php?id=<?php echo $product['id']; ?>" class="text-red-600 hover:underline text-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus</a>
+                                        <a href="../../controllers/penjual/delete_product.php?id=<?php echo $product['id']; ?>" class="text-red-600 hover:underline text-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

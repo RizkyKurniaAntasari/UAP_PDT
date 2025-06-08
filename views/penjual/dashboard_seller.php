@@ -1,4 +1,6 @@
 <?php
+    require_once __DIR__ . '/../../src/config.php';
+    require_once BASE_PATH . func;
     require_once '../../controllers/penjual/dashboard_seller.php';
 ?>
 <!DOCTYPE html>
@@ -16,18 +18,12 @@
     </style>
 </head>
 <body class="bg-gray-100">
-    <nav class="bg-blue-600 p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="dashboard_seller.php" class="text-white text-2xl font-bold">Dashboard Penjual</a>
-            <div class="flex items-center space-x-4">
-                <span class="text-white">Halo, <?php echo htmlspecialchars($username); ?> (Penjual)</span>
-                <a href="../../controllers/edit_profile.php" class="text-white hover:text-blue-200">Edit Profil</a>
-                <a href="../../controllers/messages.php" class="text-white hover:text-blue-200">Pesan</a>
-                <a href="../../controllers/auth/logout.php" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition duration-300">Logout</a>
-            </div>
-        </div>
-    </nav>
-
+    <?php include_once '../components/navbar.php';?>
+<?php
+// var_dump($_SESSION['role']); // cek isi role
+// var_dump($_SESSION['user_id']); // cek user id yang login
+// var_dump($product['user_id']); // cek user id pemilik produk
+?>
     <div class="container mx-auto p-6">
         <?php echo $message; ?>
 
@@ -55,7 +51,6 @@
                                 <tr class="border-b border-gray-200 hover:bg-gray-50">
                                     <td class="py-3 px-4">
                                         <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['title']); ?>" class="w-16 h-16 object-cover rounded-md">
-                                        <!-- <?php var_dump($product['image_url']); ?> -->
                                         <!-- <img src="/PDT/uploads/img_684481b49f62c.jpeg   " class="w-16 h-16 object-cover rounded-md"> -->
                                     </td>
                                     <td class="py-3 px-4 text-gray-800"><?php echo htmlspecialchars($product['title']); ?></td>
@@ -67,8 +62,8 @@
                                     </td>
                                     <td class="py-3 px-4 text-gray-600 text-sm"><?php echo date('d M Y H:i', strtotime($product['created_at'])); ?></td>
                                     <td class="py-3 px-4 space-x-2">
-                                        <a href="edit_product.php?id=<?php echo $product['id']; ?>" class="text-blue-600 hover:underline text-sm">Edit</a>
-                                        <a href="delete_product.php?id=<?php echo $product['id']; ?>" class="text-red-600 hover:underline text-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus</a>
+                                        <a href="../../views/penjual/edit_product.php?id=<?php echo $product['id']; ?>" class="text-blue-600 hover:underline text-sm">Edit</a>
+                                        <a href="../../views/penjual/delete_product.php?id=<?php echo $product['id']; ?>" class="text-red-600 hover:underline text-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

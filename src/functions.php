@@ -22,6 +22,16 @@ function redirect_seller($url) {
     exit();
 }
 
+function redirect_views($url){
+    header("Location: " . BASE_URL . '/views' . $url);
+    exit();
+}
+
+function redirect_controllers($url){
+    header("Location: " . BASE_URL . '/controllers' . $url);
+    exit();
+}
+
 // Fungsi untuk mengecek apakah user sudah login
 function check_auth() {
     if (!isset($_SESSION['user_id'])) {

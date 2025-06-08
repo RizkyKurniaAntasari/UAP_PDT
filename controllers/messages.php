@@ -38,7 +38,7 @@ foreach ($all_messages as $msg) {
     } else {
         $key = 'user_' . $partner_id;
     }
-    
+
     if (!isset($conversations[$key])) {
         $conversations[$key] = [
             'product_id' => $msg['product_id'],
@@ -50,10 +50,13 @@ foreach ($all_messages as $msg) {
     }
     $conversations[$key]['messages'][] = $msg;
 }
-
+// $role = get_user_role();
+// var_dump($role);
+// var_dump($msg);
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,9 +69,10 @@ foreach ($all_messages as $msg) {
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
-    
-    <?php include_once '../views/components/navbar.php';?>
+
+    <?php include_once '../views/components/navbar.php'; ?>
 
     <div class="container mx-auto p-6">
         <?php echo $message; ?>
@@ -100,19 +104,7 @@ foreach ($all_messages as $msg) {
                                     </div>
                                 <?php endforeach; ?>
                             </div>
-                            <?php if ($role == 'buyer' && $conversation['partner_id'] != $user_id): // Buyer bisa membalas pesan ke seller ?>
-                                <div class="mt-4">
-                                    <h4 class="text-md font-semibold text-gray-700 mb-2">Balas Pesan:</h4>
-                                    <form action="send_message.php" method="POST" class="space-y-2">
-                                        <input type="hidden" name="receiver_id" value="<?php echo htmlspecialchars($conversation['partner_id']); ?>">
-                                        <?php if ($conversation['product_id']): ?>
-                                            <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($conversation['product_id']); ?>">
-                                        <?php endif; ?>
-                                        <textarea name="message_text" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ketik balasan Anda..." required></textarea>
-                                        <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">Kirim Balasan</button>
-                                    </form>
-                                </div>
-                            <?php elseif ($role == 'seller' && $conversation['partner_id'] != $user_id): // Seller bisa membalas pesan ke buyer ?>
+                            <?php if ($conversation['partner_id'] != $user_id): ?>
                                 <div class="mt-4">
                                     <h4 class="text-md font-semibold text-gray-700 mb-2">Balas Pesan:</h4>
                                     <form action="send_message.php" method="POST" class="space-y-2">
@@ -125,6 +117,7 @@ foreach ($all_messages as $msg) {
                                     </form>
                                 </div>
                             <?php endif; ?>
+
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -132,4 +125,5 @@ foreach ($all_messages as $msg) {
         </div>
     </div>
 </body>
+
 </html>

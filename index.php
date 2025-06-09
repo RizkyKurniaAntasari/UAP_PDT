@@ -2,15 +2,10 @@
 // index.php
 require_once __DIR__ . '/src/config.php';
 require_once BASE_PATH . func;
-
 if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
-    if ($_SESSION['role'] == 'seller') {
-        redirect('dashboard_seller.php');
-    } elseif ($_SESSION['role'] == 'buyer') {
-        redirect('dashboard_buyer.php');
-    }
+    ($_SESSION['role'] == 'seller') ? redirect_views('/penjual/dashboard_seller.php') : redirect_views('/pembeli/dashboard_buyer.php');
+    exit();
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="id">

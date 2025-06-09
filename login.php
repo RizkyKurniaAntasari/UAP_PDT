@@ -1,10 +1,14 @@
 <?php
-    // require_once __DIR__ . '/src/config.php';
-    // require_once __DIR__ . '/src/functions.php';
-    require_once __DIR__ . '/controllers/auth/login.php'
-?>
+// require_once __DIR__ . '/src/config.php';
+// require_once __DIR__ . '/src/functions.php';
+require_once __DIR__ . '/controllers/auth/login.php';
+if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
+    ($_SESSION['role'] == 'seller') ? redirect_views('/penjual/dashboard_seller.php') : redirect_views('/pembeli/dashboard_buyer.php');
+    exit();
+} ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +21,7 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Login</h2>
@@ -36,4 +41,5 @@
         <p class="mt-2 text-center text-gray-600"><a href="index.php" class="text-blue-600 hover:underline">Kembali ke Beranda</a></p>
     </div>
 </body>
+
 </html>

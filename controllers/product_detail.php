@@ -23,7 +23,7 @@ if (isset($_GET['id'])) {
 
     if (!$product) {
         set_message('error', 'Produk tidak ditemukan atau tidak tersedia.');
-        redirect_views('/' . $peran . '/dashboard_buyer.php');
+        redirect_Views('/' . $peran . '/dashboard_' . $role .'.php');
     }
 
     // Get seller's ID for messaging
@@ -31,6 +31,6 @@ if (isset($_GET['id'])) {
 
 } else {
     set_message('error', 'ID Produk tidak diberikan.');
-    redirect('/views/pembeli/dashboard_buyer.php');
+    redirect_Views('/' . $peran . '/dashboard_' . $role .'.php');
 }
 ?>

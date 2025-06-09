@@ -83,17 +83,19 @@ require_once __DIR__ . '/../../controllers/penjual/dashboard_seller.php';
             <?php else: ?>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     <?php foreach ($all_products as $product): ?>
-                        <a href="../product_detail.php?id=<?php echo urlencode($product['id']); ?>" class="block">
-                            <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-200">
-                                <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['title']); ?>" class="w-full h-48 object-cover">
-                                <div class="p-4 flex-grow flex flex-col">
-                                    <h3 class="text-lg font-semibold text-gray-800 mb-2"><?php echo htmlspecialchars($product['title']); ?></h3>
-                                    <p class="text-gray-600 text-sm mb-2 line-clamp-3"><?php echo htmlspecialchars($product['description']); ?></p>
-                                    <p class="text-xl font-bold text-blue-600 mb-2">Rp <?php echo number_format($product['price'], 0, ',', '.'); ?></p>
-                                    <p class="text-gray-500 text-xs mb-4">Penjual: <?php echo htmlspecialchars($product['seller_username']); ?></p>
+                        <?php if ($product['status'] != 'sold'): ?>
+                            <a href="../product_detail.php?id=<?php echo urlencode($product['id']); ?>" class="block">
+                                <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-200">
+                                    <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['title']); ?>" class="w-full h-48 object-cover">
+                                    <div class="p-4 flex-grow flex flex-col">
+                                        <h3 class="text-lg font-semibold text-gray-800 mb-2"><?php echo htmlspecialchars($product['title']); ?></h3>
+                                        <p class="text-gray-600 text-sm mb-2 line-clamp-3"><?php echo htmlspecialchars($product['description']); ?></p>
+                                        <p class="text-xl font-bold text-blue-600 mb-2">Rp <?php echo number_format($product['price'], 0, ',', '.'); ?></p>
+                                        <p class="text-gray-500 text-xs mb-4">Penjual: <?php echo htmlspecialchars($product['seller_username']); ?></p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>

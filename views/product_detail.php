@@ -23,6 +23,7 @@ $role = $_SESSION['role'] ?? null;
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
     <div class="container mx-auto p-6">
         <div class="bg-white p-8 rounded-lg shadow-md flex flex-col md:flex-row gap-8">
@@ -47,23 +48,51 @@ $role = $_SESSION['role'] ?? null;
                 <p class="text-gray-600 text-sm mb-6">
                     Tanggal Unggah: <?php echo date('d M Y H:i', strtotime($product['created_at'])); ?>
                 </p>
-
                 <?php if ($role === 'seller'): ?>
-                    <!-- Tampilan Aksi Untuk Seller -->
-                    <p class="text-gray-600 italic mb-4">Ini adalah produk <?=$product['seller_username'] == $username ? 'Anda' : $product['seller_username'];?>.</p>
-                    <div class="flex space-x-2">
-                        <a href="../views/penjual/edit_product.php?id=<?php echo $product['id']; ?>"
-                            class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
-                            Edit Produk
-                        </a>
-                        <a href="../controllers/penjual/delete_product.php?id=<?php echo $product['id']; ?>"
-                            class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300"
-                            onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">
-                            Hapus Produk
-                        </a>
-                    </div>
+                    <!-- Tampilkan informasi produk -->
+                    <p class="text-gray-600 italic mb-4">
+                        <?php if ($product['seller_username'] == $username): ?>
+                            Ini adalah produk Anda.
+                        <?php else: ?>
+                            Ini adalah produk milik <?= htmlspecialchars($product['seller_username']); ?>.
+                        <?php endif; ?>
+                    </p>
+
+                    <!-- Jika seller adalah pemilik produk, tampilkan tombol edit dan hapus -->
+                    <?php if ($product['seller_username'] == $username): ?>
+                        <div class="flex space-x-2">
+                            <a href="../views/penjual/edit_product.php?id=<?php echo $product['id']; ?>"
+                                class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">
+                                Edit Produk
+                            </a>
+                            <a href="../controllers/penjual/delete_product.php?id=<?php echo $product['id']; ?>"
+                                class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300"
+                                onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">
+                                Hapus Produk
+                            </a>
+                        </div>
+                    <?php else: ?>
+                        <!-- Jika seller bukan pemilik produk, tampilkan form kirim pesan -->
+                        <div class="mt-8 bg-gray-50 p-6 rounded-lg border border-gray-200">
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Kirim Pesan ke Penjual</h3>
+                            <form action="../controllers/send_message.php" method="POST" class="space-y-4">
+                                <input type="hidden" name="receiver_id" value="<?php echo htmlspecialchars($product['user_id']); ?>">
+                                <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['id']); ?>">
+                                <div>
+                                    <label for="message_text" class="block text-gray-700 text-sm font-semibold mb-2">Pesan Anda:</label>
+                                    <textarea id="message_text" name="message_text" rows="4"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        placeholder="Tanyakan tentang produk ini..." required></textarea>
+                                </div>
+                                <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 w-full">
+                                    Kirim Pesan
+                                </button>
+                            </form>
+                        </div>
+                    <?php endif; ?>
+
                 <?php elseif ($role === 'buyer'): ?>
-                    <!-- Tampilan Aksi Untuk Buyer -->
+                    <!-- Buyer -->
                     <div class="flex space-x-4 mb-6">
                         <form action="../controllers/pembeli/add_to_wishlist.php" method="POST" class="inline-block">
                             <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
@@ -97,8 +126,8 @@ $role = $_SESSION['role'] ?? null;
             </div>
         </div>
     </div>
-</div>
-<?php include_once 'components/footer.php'; ?>
+    </div>
+    <?php include_once 'components/footer.php'; ?>
 </body>
 
 </html>

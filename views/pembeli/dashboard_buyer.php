@@ -3,7 +3,6 @@
 require_once __DIR__ . '/../../src/config.php';
 require_once BASE_PATH . func;
 require_once BASE_PATH . '/controllers/pembeli/dashboard_buyer.php';
-include_once '../components/navbar.php';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -20,7 +19,7 @@ include_once '../components/navbar.php';
     </style>
 </head>
 <body class="bg-gray-100">
-
+    <?php include_once '../components/navbar.php'; ?>
     <div class="container mx-auto p-6">
         <?php echo $message; ?>
 

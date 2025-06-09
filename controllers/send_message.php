@@ -13,7 +13,7 @@ $dashboard = $sender == 'pembeli' ? 'dashboard_buyer.php' : 'dashboard_seller.ph
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $receiver_id = sanitize_input($_POST['receiver_id']);
     $product_id = isset($_POST['product_id']) ? sanitize_input($_POST['product_id']) : null;
-    $message_text = sanitize_input($_POST['message_text']);
+    $message_text = ($_POST['message_text']);
 
     if (empty($receiver_id) || empty($message_text)) {
         set_message('error', 'Penerima dan isi pesan harus diisi.');
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         set_message('error', 'Terjadi kesalahan saat mengirim pesan.');
     }
-    redirect('/views/' .  $sender . '/' . $dashboard);
+    redirect('/views/messages.php');
 } else {
     set_message('error', 'Metode request tidak valid.');
     redirect('/views/' .  $sender . '/' . $dashboard);

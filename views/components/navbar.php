@@ -10,7 +10,7 @@ $dashboard_routes = [
     'penjual' => BASE_URL . '/views/penjual/dashboard_seller.php',
 ];
 
-$pesan_routes = BASE_URL . '/controllers/messages.php';
+$pesan_routes = BASE_URL . '/views/messages_page.php';
 $edit = BASE_URL . '/views/edit_profile.php';
 $logout = BASE_URL . '/controllers/auth/logout.php';
 

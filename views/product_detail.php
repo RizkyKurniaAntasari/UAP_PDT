@@ -50,7 +50,7 @@ $role = $_SESSION['role'] ?? null;
 
                 <?php if ($role === 'seller'): ?>
                     <!-- Tampilan Aksi Untuk Seller -->
-                    <p class="text-gray-600 italic mb-4">Ini adalah produk Anda.</p>
+                    <p class="text-gray-600 italic mb-4">Ini adalah produk <?=$product['seller_username'] == $username ? 'Anda' : $product['seller_username'];?>.</p>
                     <div class="flex space-x-2">
                         <a href="../views/penjual/edit_product.php?id=<?php echo $product['id']; ?>"
                             class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">

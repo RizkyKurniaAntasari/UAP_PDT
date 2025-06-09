@@ -77,3 +77,31 @@ BEGIN
 END$$
 
 DELIMITER;
+
+DELIMITER $$
+
+CREATE FUNCTION get_user_role_by_id(uid INT)
+RETURNS VARCHAR(20)
+DETERMINISTIC
+READS SQL DATA
+BEGIN
+    DECLARE role_value VARCHAR(20);
+    SELECT role INTO role_value FROM users WHERE id = uid;
+    RETURN role_value;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE FUNCTION get_username_by_id(uid INT)
+RETURNS VARCHAR(50)
+DETERMINISTIC
+READS SQL DATA
+BEGIN
+    DECLARE uname VARCHAR(50);
+    SELECT username INTO uname FROM users WHERE id = uid;
+    RETURN uname;
+END $$
+
+DELIMITER ;

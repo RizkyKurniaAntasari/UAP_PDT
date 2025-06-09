@@ -18,6 +18,8 @@ try {
 
     // Ambil semua pesan
     $all_messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    while ($stmt->nextRowset()) { /* kosongan ngab */ }
+    $stmt->closeCursor(); // sangat penting!
 
     // Proses grouping percakapan
     $conversations = [];

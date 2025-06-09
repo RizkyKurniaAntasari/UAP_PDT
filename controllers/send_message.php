@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($checkStmt->rowCount() === 0) {
             throw new Exception("Receiver tidak valid.");
         }
+        $checkStmt->closeCursor();
 
         // Kirim pesan
         $stmt = $pdo->prepare("INSERT INTO messages (sender_id, receiver_id, product_id, message_text) VALUES (?, ?, ?, ?)");

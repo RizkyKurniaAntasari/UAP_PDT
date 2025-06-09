@@ -1,7 +1,7 @@
--- Nama Database: uas_pdt_db
-CREATE DATABASE IF NOT EXISTS uas_pdt_db;
+-- Nama Database: uap_pdt_db
+CREATE DATABASE IF NOT EXISTS uap_pdt_db;
 
-USE uas_pdt_db;
+USE uap_pdt_db;
 -- Tabel users
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,

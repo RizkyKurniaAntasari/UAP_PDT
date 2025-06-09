@@ -25,15 +25,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         redirect('/views/' .  $sender . '/' . $dashboard);
     }
 
-    $stmt = $pdo->prepare("INSERT INTO messages (sender_id, receiver_id, product_id, message_text) VALUES (?, ?, ?, ?)");
-    if ($stmt->execute([$sender_id, $receiver_id, $product_id, $message_text])) {
+    try {
+        $pdo->beginTransaction(); // Start Transaction
+
+        // Pastikan receiver valid
+        $checkStmt = $pdo->prepare("SELECT id FROM users WHERE id = ?");
+        $checkStmt->execute([$receiver_id]);
+        if ($checkStmt->rowCount() === 0) {
+            throw new Exception("Receiver tidak valid.");
+        }
+        $checkStmt->closeCursor();
+
+        // Kirim pesan
+        $stmt = $pdo->prepare("INSERT INTO messages (sender_id, receiver_id, product_id, message_text) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$sender_id, $receiver_id, $product_id, $message_text]);
+
+        // Commit transaksi
+        $pdo->commit();
         set_message('success', 'Pesan berhasil dikirim!');
-    } else {
-        set_message('error', 'Terjadi kesalahan saat mengirim pesan.');
+    } catch (Exception $e) {
+        // Rollback jika error
+        $pdo->rollBack();
+        set_message('error', 'Gagal mengirim pesan: ' . $e->getMessage());
     }
+
     redirect('/views/messages_page.php');
 } else {
     set_message('error', 'Metode request tidak valid.');
     redirect('/views/' .  $sender . '/' . $dashboard);
 }
-?>

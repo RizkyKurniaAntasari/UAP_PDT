@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         set_message('error', 'Terjadi kesalahan saat mengirim pesan.');
     }
-    redirect('/views/messages.php');
+    redirect('/views/messages_page.php');
 } else {
     set_message('error', 'Metode request tidak valid.');
     redirect('/views/' .  $sender . '/' . $dashboard);

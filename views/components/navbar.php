@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../src/config.php';
+require_once __DIR__ . '/../../src/functions.php';
 check_auth();
 $username = get_username();
 $role = get_user_role() == 'buyer' ? 'pembeli' : 'penjual';

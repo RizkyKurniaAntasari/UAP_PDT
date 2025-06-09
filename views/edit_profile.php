@@ -53,7 +53,7 @@ require_once __DIR__ . '/../controllers/edit_profile.php';
                 </div>
                 <div class="flex justify-between space-x-4">
                     <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">Perbarui Profil</button>
-                    <a href="<?php echo ($role == 'pembeli' ? $dashboard_routes['pembeli'] : $dashboard_routes['penjual']); ?>" class="w-full text-center bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300">Batal</a>
+                    <a href="<?php echo ($role == 'buyer' ? $dashboard_routes['pembeli'] : $dashboard_routes['penjual']); ?>" class="w-full text-center bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 transition duration-300">Batal</a>
                 </div>
             </form>
         </div>

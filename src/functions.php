@@ -10,7 +10,7 @@ function sanitize_input($data) {
 }
 
 // Fungsi untuk redirect
-define('BASE_URL', '/PDT'); // Base URL
+define('BASE_URL', '/' . basename(__DIR__)); // Base URL
 function redirect($url) {
     header("Location: " . BASE_URL . $url);
     exit();

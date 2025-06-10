@@ -19,12 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (empty($title) || empty($price)) {
         set_message('error', 'Judul dan Harga harus diisi.');
-        redirect_seller('add_product.php');
+        redirect_views('/penjual/add_product.php');
     }
 
     if (!is_numeric($price) || $price < 0) {
         set_message('error', 'Harga harus berupa angka positif.');
-        redirect_seller('add_product.php');
+        redirect_views('/penjual/add_product.php');
     }
 
     // Proses Upload Gambar
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $allowed_types = ['image/jpeg', 'image/png', 'image/jpg'];
         if (!in_array($file_type, $allowed_types)) {
             set_message('error', 'Format gambar hanya boleh JPG, JPEG, atau PNG.');
-            redirect_seller('add_product.php');
+            redirect_views('/penjual/add_product.php');
         }
 
         // Rename file agar unik
@@ -55,23 +55,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Pindahkan file
         if (!move_uploaded_file($file_tmp, $destination_path)) {
             set_message('error', 'Gagal mengunggah gambar.');
-            redirect_seller('add_product.php');
+            redirect_views('/penjual/add_product.php');
         }
 
         // Simpan path relatif ke database
-        $image_path = '/PDT/uploads/' . $new_name; # sesuaikan dengan nama project masing2 (PDT)
+        $image_path = '/'. basename(dirname(__DIR__))  .'/uploads/' . $new_name; # sesuaikan dengan nama project masing2 (PDT)
     } else {
         set_message('error', 'Gambar produk wajib diunggah.');
-        redirect_seller('add_product.php');
+        redirect_views('/penjual/add_product.php');
     }
 
     // Simpan ke database
     $stmt = $pdo->prepare("INSERT INTO products (user_id, title, description, price, image_url) VALUES (?, ?, ?, ?, ?)");
     if ($stmt->execute([$user_id, $title, $description, $price, $image_path])) {
         set_message('success', 'Produk berhasil ditambahkan!');
-        redirect('/views/penjual/dashboard_seller.php');
+        redirect_views('/penjual/dashboard_seller.php');
     } else {
         set_message('error', 'Terjadi kesalahan saat menambahkan produk.');
-        redirect_seller('add_product.php');
+        redirect_views('/penjual/add_product.php');
     }
 }

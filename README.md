@@ -31,6 +31,8 @@ Sistem memanfaatkan function untuk mengambil informasi tertentu secara efisien, 
 # Trigger
 trigger `log_message_trigger` berfungsi sebagai sistem pencatat otomatis yang aktif setelah data pesan masuk ke sistem. Trigger ini merekam setiap pesan yang dikirim, memastikan tidak ada aktivitas komunikasi yang terlewatkan dari log historis.
 
+![Image](https://github.com/user-attachments/assets/c458001e-7245-4f00-a15a-6d48c47d4e3f)
+
 ### ⚙️ Aktif di Proses Berikut
 Trigger ini aktif saat akan menyisipkan (INSERT) data ke tabel messages, baik melalui:
 1. Fitur chat antar pengguna

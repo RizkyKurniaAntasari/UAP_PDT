@@ -44,6 +44,14 @@ Trigger ini aktif saat akan menyisipkan (INSERT) data ke tabel messages, baik me
 2. Mencegah pesan dikirim ke diri sendiri
 3. Memverifikasi bahwa produk yang disebut memang benar-benar ada
 
+# 🔄 Backup Otomatis
+Untuk menjaga integritas dan ketersediaan data, sistem ini dilengkapi fitur backup otomatis menggunakan mysqldump yang dijalankan melalui task scheduler. Proses backup dilakukan secara berkala dan disimpan dalam direktori khusus dengan format nama file yang mencantumkan tanggal sehingga memudahkan pelacakan. Semua file backup disimpan di `folder src/backup/` dalam format `.sql`.
+
+`backup_db.php`
+
+![Image](https://github.com/user-attachments/assets/78df4248-be55-4c79-b12b-0d063e722710)
+
+Backup ini dapat dijadwalkan secara otomatis menggunakan fitur Task Scheduler (Windows) agar berjalan rutin sesuai kebutuhan, misalnya harian atau mingguan.
 
 
 

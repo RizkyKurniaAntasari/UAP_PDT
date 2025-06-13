@@ -64,6 +64,7 @@ Untuk menjamin integritas proses ini, digunakan mekanisme transaksi database mel
 3. Jika penerima valid, data pesan disimpan ke dalam tabel messages
 4. Jika semua langkah berhasil, maka transaksi diselesaikan dengan commit()
 5. Namun jika terjadi kesalahan — seperti penerima tidak ditemukan — maka seluruh proses dibatalkan dengan rollBack()
+   
 Dengan pendekatan ini, sistem memastikan bahwa tidak ada pesan tersimpan secara parsial atau menuju pengguna yang tidak sah.
 
 `send_message.php`

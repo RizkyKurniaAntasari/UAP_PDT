@@ -50,6 +50,50 @@ CREATE TABLE IF NOT EXISTS wishlists (
     FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS log_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    message_id INT NOT NULL,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
+    product_id INT,
+    message_text TEXT,
+    created_at DATETIME,
+    FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE
+);
+
+
+DELIMITER $$
+
+CREATE TRIGGER validate_message_trigger
+BEFORE INSERT ON messages
+FOR EACH ROW
+BEGIN
+    -- Validasi sender atau receiver kosong
+    IF NEW.sender_id IS NULL OR NEW.receiver_id IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Sender or receiver ID is missing';
+    END IF;
+
+    -- Validasi sender dan receiver tidak boleh sama
+    IF NEW.sender_id = NEW.receiver_id THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Sender and receiver cannot be the same';
+    END IF;
+
+    -- Validasi product_id jika diisi, harus ada di tabel products
+    DECLARE _exists INT DEFAULT 0;
+    IF NEW.product_id IS NOT NULL THEN
+        SELECT COUNT(*) INTO _exists FROM products WHERE id = NEW.product_id;
+        IF _exists = 0 THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Product ID does not exist';
+        END IF;
+    END IF;
+END$$
+
+DELIMITER ;
+
+
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS get_user_conversations$$
@@ -105,3 +149,8 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+
+
+
+

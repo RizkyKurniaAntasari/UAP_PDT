@@ -39,6 +39,10 @@ trigger `log_message_trigger` berfungsi sebagai sistem pencatat otomatis yang ak
 
 ![Image](https://github.com/user-attachments/assets/081cc899-f594-435f-a801-c6e811ddc845)
 
+`test_trigger.php`
+
+![Image](https://github.com/user-attachments/assets/f6ec848b-0ef6-4822-8f02-1dbff774a706)
+
 ### ⚙️ Aktif di Proses Berikut
 Trigger ini aktif saat akan menyisipkan (INSERT) data ke tabel messages, baik melalui:
 1. Fitur chat antar pengguna
@@ -70,6 +74,8 @@ Dengan pendekatan ini, sistem memastikan bahwa tidak ada pesan tersimpan secara 
 `send_message.php`
 
 ![Image](https://github.com/user-attachments/assets/bc44bd20-627c-4a25-98fb-15a07ff0ad9b)
+
+Dengan teknik ini, proses pengiriman pesan menjadi atomik, artinya hanya akan dianggap berhasil jika semua langkah berhasil dijalankan. Jika salah satu gagal, maka seluruh proses dibatalkan agar tidak ada perubahan setengah jalan di database.
 
 # 🔄 Backup Otomatis
 Untuk menjaga integritas dan ketersediaan data, sistem ini dilengkapi fitur backup otomatis menggunakan mysqldump yang dijalankan melalui task scheduler. Proses backup dilakukan secara berkala dan disimpan dalam direktori khusus dengan format nama file yang mencantumkan tanggal sehingga memudahkan pelacakan. Semua file backup disimpan di `folder src/backup/` dalam format `.sql`.

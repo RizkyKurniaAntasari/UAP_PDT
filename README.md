@@ -12,4 +12,20 @@ Dibangun menggunakan bahasa PHP dan database MySQL yang mendukung fitur-fitur se
 ![Image](https://github.com/user-attachments/assets/abc6743d-1f96-4af7-99fa-e92d16b6e3fd)
 ![Image](https://github.com/user-attachments/assets/adc709c5-73de-47e5-83b9-392442d3d947)
 
+# Stored Procedure
+Sistem menggunakan stored procedure untuk menangani logika kompleks secara langsung di sisi database, seperti:
+1. Menampilkan semua pesan yang terlibat dengan pengguna tertentu (baik sebagai pengirim maupun penerima), lengkap dengan nama pengguna dan judul produk terkait.
+2. Stored procedure: get_user_conversations(uid INT)
+3. Cuplikan kode:
+![Image](https://github.com/user-attachments/assets/08bb882f-8b41-4a2f-bdf4-1507ad2cd048)
+
+# Function
+Sistem memanfaatkan function untuk mengambil informasi tertentu secara efisien, contohnya:
+1. Mendapatkan peran pengguna (buyer atau seller) berdasarkan ID-nya.
+2. Function: get_user_role_by_id(uid INT)
+3. Cuplikan kode:
+![Image](https://github.com/user-attachments/assets/7824953d-3f27-454a-adaa-a5ed3a565d3e)
+
+
+
 

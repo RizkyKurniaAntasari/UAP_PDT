@@ -59,11 +59,11 @@ Untuk menjamin integritas proses ini, digunakan mekanisme transaksi database mel
 a. Memastikan receiver_id dan message_text tidak kosong.
 b. Mencegah pengguna mengirim pesan ke dirinya sendiri.
 ### 2. Transaksi Database
-a. Proses dimulai dengan beginTransaction().
-b. Sistem memeriksa apakah penerima pesan (receiver_id) benar-benar terdaftar di database.
-c. Jika penerima valid, data pesan disimpan ke dalam tabel messages.
-d. Jika semua langkah berhasil, maka transaksi diselesaikan dengan commit().
-e. Namun jika terjadi kesalahan — seperti penerima tidak ditemukan — maka seluruh proses dibatalkan dengan rollBack().
+a. Proses dimulai dengan beginTransaction().\n
+b. Sistem memeriksa apakah penerima pesan (receiver_id) benar-benar terdaftar di database.\n
+c. Jika penerima valid, data pesan disimpan ke dalam tabel messages.\n
+d. Jika semua langkah berhasil, maka transaksi diselesaikan dengan commit().\n
+e. Namun jika terjadi kesalahan — seperti penerima tidak ditemukan — maka seluruh proses dibatalkan dengan rollBack().\n
 Dengan pendekatan ini, sistem memastikan bahwa tidak ada pesan tersimpan secara parsial atau menuju pengguna yang tidak sah.
 
 `send_message.php`

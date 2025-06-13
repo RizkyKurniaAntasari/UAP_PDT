@@ -28,6 +28,13 @@ Sistem memanfaatkan function untuk mengambil informasi tertentu secara efisien, 
    
 ![Image](https://github.com/user-attachments/assets/7824953d-3f27-454a-adaa-a5ed3a565d3e)
 
+# Trigger
+trigger `log_message_trigger` berfungsi sebagai sistem pencatat otomatis yang aktif setelah data pesan masuk ke sistem. Trigger ini merekam setiap pesan yang dikirim, memastikan tidak ada aktivitas komunikasi yang terlewatkan dari log historis.
+
+![Image]()
+
+
+
 
 
 

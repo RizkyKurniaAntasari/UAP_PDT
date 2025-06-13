@@ -50,6 +50,26 @@ Trigger ini aktif saat akan menyisipkan (INSERT) data ke tabel messages, baik me
 2. Mencegah pesan dikirim ke diri sendiri
 3. Memverifikasi bahwa produk yang disebut memang benar-benar ada
 
+# 🔄 Transaction
+Dalam sistem, proses pengiriman pesan antar pengguna — seperti pembeli dan penjual — tidak cukup hanya menyisipkan data ke dalam tabel. Dibutuhkan jaminan bahwa semua tahapan validasi dan penyimpanan dilakukan dengan benar agar tidak terjadi inkonsistensi, misalnya pesan masuk ke database meskipun penerima tidak valid.
+Untuk menjamin integritas proses ini, digunakan mekanisme transaksi database melalui beginTransaction(), commit(), dan rollBack() pada PDO.
+
+### Alur Proses:
+### 1. Validasi Data
+a. Memastikan receiver_id dan message_text tidak kosong.
+b. Mencegah pengguna mengirim pesan ke dirinya sendiri.
+### 2. Transaksi Database
+a. Proses dimulai dengan beginTransaction().
+b. Sistem memeriksa apakah penerima pesan (receiver_id) benar-benar terdaftar di database.
+c. Jika penerima valid, data pesan disimpan ke dalam tabel messages.
+d. Jika semua langkah berhasil, maka transaksi diselesaikan dengan commit().
+e. Namun jika terjadi kesalahan — seperti penerima tidak ditemukan — maka seluruh proses dibatalkan dengan rollBack().
+Dengan pendekatan ini, sistem memastikan bahwa tidak ada pesan tersimpan secara parsial atau menuju pengguna yang tidak sah.
+
+`send_message.php`
+
+![Image](https://github.com/user-attachments/assets/bc44bd20-627c-4a25-98fb-15a07ff0ad9b)
+
 # 🔄 Backup Otomatis
 Untuk menjaga integritas dan ketersediaan data, sistem ini dilengkapi fitur backup otomatis menggunakan mysqldump yang dijalankan melalui task scheduler. Proses backup dilakukan secara berkala dan disimpan dalam direktori khusus dengan format nama file yang mencantumkan tanggal sehingga memudahkan pelacakan. Semua file backup disimpan di `folder src/backup/` dalam format `.sql`.
 

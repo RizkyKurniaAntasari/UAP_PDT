@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // Simpan path relatif ke database
-        $image_path = '/'. basename(dirname(__DIR__))  .'/uploads/' . $new_name; # sesuaikan dengan nama project masing2 (PDT)
+        $image_path = '/'. basename(dirname(dirname(__DIR__)))  .'/uploads/' . $new_name; # sesuaikan dengan nama project masing2 (PDT)
     } else {
         set_message('error', 'Gambar produk wajib diunggah.');
         redirect_views('/penjual/add_product.php');
